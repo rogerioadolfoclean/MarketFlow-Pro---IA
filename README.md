@@ -57,6 +57,8 @@ python app.py
 http://localhost:5000
 ```
 
+**Note de sécurité** : Pour une utilisation en production, modifiez la clé secrète dans `app.py` et utilisez des variables d'environnement pour les configurations sensibles.
+
 ## Utilisation
 
 1. Sur la page d'accueil, sélectionnez un profil utilisateur

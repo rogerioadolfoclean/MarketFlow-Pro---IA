@@ -13,6 +13,13 @@ app = Flask(__name__)
 app.secret_key = 'marketflow-secret-key-2026'
 app.config['SESSION_TYPE'] = 'filesystem'
 
+# AI Simulation Constants
+SIMULATION_NEW_VIEWS_MAX = 5  # Maximum new views per page load
+SIMULATION_LIKE_PROBABILITY = 0.3  # 30% chance of new likes
+SIMULATION_LIKE_INCREMENT_MAX = 3  # Maximum likes to add
+SIMULATION_VOTE_PROBABILITY = 0.2  # 20% chance of new community votes
+SIMULATION_VOTE_INCREMENT_MAX = 2  # Maximum votes to add
+
 # Simulated database
 users_db = {
     'admin@marketflow.com': {
@@ -109,16 +116,16 @@ products_db = [
 def simulate_community_activity():
     """Simule l'activité de la communauté sur les produits"""
     for product in products_db:
-        # Simulation de nouvelles vues (0-5 par refresh)
-        product['views'] += random.randint(0, 5)
+        # Simulation de nouvelles vues
+        product['views'] += random.randint(0, SIMULATION_NEW_VIEWS_MAX)
         
-        # Simulation de nouveaux likes (probabilité de 30%)
-        if random.random() < 0.3:
-            product['likes'] += random.randint(1, 3)
+        # Simulation de nouveaux likes
+        if random.random() < SIMULATION_LIKE_PROBABILITY:
+            product['likes'] += random.randint(1, SIMULATION_LIKE_INCREMENT_MAX)
         
-        # Simulation de votes communautaires (probabilité de 20%)
-        if random.random() < 0.2:
-            product['community_votes'] += random.randint(1, 2)
+        # Simulation de votes communautaires
+        if random.random() < SIMULATION_VOTE_PROBABILITY:
+            product['community_votes'] += random.randint(1, SIMULATION_VOTE_INCREMENT_MAX)
 
 
 @app.route('/')
