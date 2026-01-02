@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketFlow-Pro - Tableau de Bord</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header de Session -->
+    <header class="session-header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>MarketFlow-Pro</h1>
+            </div>
+            
+            <div class="user-info">
+                <div class="user-details">
+                    <span class="user-name">{{ user.name }}</span>
+                    <span class="user-email">{{ user.email }}</span>
+                    <span class="badge {{ user.membership_level.lower().replace(' ', '-') }}">
+                        {{ user.membership_level }}
+                    </span>
+                </div>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Déconnexion</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <!-- Community Picks Section -->
+        <section class="community-picks">
+            <div class="section-header">
+                <h2>🏆 Populaire dans la Communauté</h2>
+                <p class="section-description">Les produits les plus appréciés par notre communauté d'utilisateurs</p>
+            </div>
+            
+            <div class="picks-grid">
+                {% for product in community_picks %}
+                <div class="pick-card">
+                    <div class="pick-rank">#{{ loop.index }}</div>
+                    <div class="product-image-placeholder">
+                        {{ product.category[:1] }}
+                    </div>
+                    <h3>{{ product.name }}</h3>
+                    <p class="price">{{ "%.2f"|format(product.price) }} €</p>
+                    <div class="social-proof">
+                        <span class="stat">
+                            <span class="icon">👁️</span> {{ product.views }} vues
+                        </span>
+                        <span class="stat">
+                            <span class="icon">❤️</span> {{ product.likes }} likes
+                        </span>
+                        <span class="stat community-votes">
+                            <span class="icon">⭐</span> {{ product.community_votes }} votes
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- All Products Section -->
+        <section class="all-products">
+            <div class="section-header">
+                <h2>Tous les Produits</h2>
+                <p class="section-description">Parcourez notre catalogue complet</p>
+            </div>
+            
+            <div class="products-grid">
+                {% for product in products %}
+                <div class="product-card" data-product-id="{{ product.id }}">
+                    <div class="product-image-placeholder">
+                        {{ product.category[:1] }}
+                    </div>
+                    <div class="product-info">
+                        <h3>{{ product.name }}</h3>
+                        <p class="description">{{ product.description }}</p>
+                        <p class="category">{{ product.category }}</p>
+                        <p class="price">{{ "%.2f"|format(product.price) }} €</p>
+                        
+                        <!-- Social Proof -->
+                        <div class="social-proof">
+                            <span class="stat views-stat" data-views="{{ product.views }}">
+                                <span class="icon">👁️</span>
+                                <span class="count">{{ product.views }}</span> vues
+                            </span>
+                            <span class="stat likes-stat" data-likes="{{ product.likes }}">
+                                <button class="like-btn" onclick="likeProduct({{ product.id }})">
+                                    <span class="icon">❤️</span>
+                                    <span class="count">{{ product.likes }}</span>
+                                </button>
+                            </span>
+                        </div>
+                        
+                        <button class="view-btn" onclick="viewProduct({{ product.id }})">
+                            Voir les détails
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="dashboard-footer">
+        <p>&copy; 2026 MarketFlow-Pro - Système intelligent de marketplace</p>
+        <p class="ai-notice">🤖 L'activité communautaire est simulée par IA pour démonstration</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
