@@ -10,8 +10,7 @@ import random
 import json
 
 app = Flask(__name__)
-app.secret_key = 'marketflow-secret-key-2026'
-app.config['SESSION_TYPE'] = 'filesystem'
+app.secret_key = 'marketflow-secret-key-2026'  # NOTE: Change this in production!
 
 # AI Simulation Constants
 SIMULATION_NEW_VIEWS_MAX = 5  # Maximum new views per page load
@@ -174,6 +173,9 @@ def like_product(product_id):
     if 'user' not in session:
         return jsonify({'error': 'Non autorisé'}), 401
     
+    if product_id <= 0:
+        return jsonify({'error': 'ID de produit invalide'}), 400
+    
     product = next((p for p in products_db if p['id'] == product_id), None)
     if product:
         product['likes'] += 1
@@ -184,6 +186,9 @@ def like_product(product_id):
 @app.route('/api/view/<int:product_id>', methods=['POST'])
 def view_product(product_id):
     """API pour enregistrer une vue de produit"""
+    if product_id <= 0:
+        return jsonify({'error': 'ID de produit invalide'}), 400
+    
     product = next((p for p in products_db if p['id'] == product_id), None)
     if product:
         product['views'] += 1
