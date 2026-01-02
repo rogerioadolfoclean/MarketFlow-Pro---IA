@@ -8,6 +8,7 @@ from flask import Flask, render_template, session, redirect, url_for, request, j
 from datetime import datetime
 import random
 import json
+import os
 
 app = Flask(__name__)
 app.secret_key = 'marketflow-secret-key-2026'  # NOTE: Change this in production!
@@ -197,4 +198,7 @@ def view_product(product_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Use environment variables for configuration
+    # Set FLASK_DEBUG=0 in production
+    debug_mode = os.environ.get('FLASK_DEBUG', '1') == '1'
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000)

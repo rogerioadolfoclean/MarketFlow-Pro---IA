@@ -49,7 +49,11 @@ pip install -r requirements.txt
 
 2. Lancer l'application :
 ```bash
+# Mode développement (avec debug)
 python app.py
+
+# Mode production (sans debug)
+FLASK_DEBUG=0 python app.py
 ```
 
 3. Ouvrir le navigateur à l'adresse :
@@ -57,7 +61,9 @@ python app.py
 http://localhost:5000
 ```
 
-**Note de sécurité** : Pour une utilisation en production, modifiez la clé secrète dans `app.py` et utilisez des variables d'environnement pour les configurations sensibles.
+**Note de sécurité** : 
+- Pour une utilisation en production, modifiez la clé secrète dans `app.py` et utilisez des variables d'environnement pour les configurations sensibles.
+- Désactivez le mode debug en production avec `FLASK_DEBUG=0`
 
 ## Utilisation
 
