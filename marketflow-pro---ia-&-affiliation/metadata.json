@@ -1,0 +1,8 @@
+
+{
+  "name": "MarketFlow Pro - IA & Affiliation",
+  "description": "Analyse de marché temps réel avec comparateur de prix et système de monétisation intégré.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
