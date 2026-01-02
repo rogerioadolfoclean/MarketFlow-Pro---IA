@@ -363,9 +363,12 @@ def like_article(article_id):
     
     db.session.commit()
     
+    # Get like count efficiently
+    like_count = db.session.query(Like).filter_by(article_id=article_id).count()
+    
     return jsonify({
         'message': 'Article liked successfully',
-        'like_count': len(article.likes)
+        'like_count': like_count
     }), 201
 
 
@@ -514,10 +517,10 @@ def calculate_trending_score(article):
     """Calculate trending score based on views, likes, and recency"""
     # Get time decay factor (newer = higher score)
     age_hours = (datetime.utcnow() - article.created_at).total_seconds() / 3600
-    time_decay = 1 / (1 + age_hours / 24)  # Decay over days
+    time_decay = 1 / max(1, 1 + age_hours / 24)  # Decay over days, avoid division by zero
     
-    # Calculate score
-    like_count = len(article.likes)
+    # Calculate score with efficient count
+    like_count = db.session.query(Like).filter_by(article_id=article.id).count()
     score = (article.view_count * 0.3 + like_count * 2) * time_decay * 10
     
     return round(score, 2)

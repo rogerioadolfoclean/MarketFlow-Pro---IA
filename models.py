@@ -72,7 +72,7 @@ class Article(db.Model):
             'author_id': self.author_id,
             'author_username': self.author.username if self.author else None,
             'view_count': self.view_count,
-            'like_count': len(self.likes),
+            'like_count': db.session.query(Like).filter_by(article_id=self.id).count(),
             'trending_score': self.trending_score,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()
