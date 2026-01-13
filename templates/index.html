@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketFlow-Pro - Connexion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h1>MarketFlow-Pro</h1>
+            <p class="subtitle">Système de Profils Multi-Utilisateurs</p>
+            
+            <div class="user-selection">
+                <h2>Sélectionnez votre profil</h2>
+                
+                <div class="profile-cards">
+                    <div class="profile-card" onclick="location.href='/login/admin@marketflow.com'">
+                        <div class="profile-icon admin">A</div>
+                        <h3>Marie Dupont</h3>
+                        <p class="email">admin@marketflow.com</p>
+                        <span class="badge admin">Administrateur</span>
+                    </div>
+                    
+                    <div class="profile-card" onclick="location.href='/login/vendor@marketflow.com'">
+                        <div class="profile-icon vendor">V</div>
+                        <h3>Jean Martin</h3>
+                        <p class="email">vendor@marketflow.com</p>
+                        <span class="badge vendor">Vendeur Premium</span>
+                    </div>
+                    
+                    <div class="profile-card" onclick="location.href='/login/buyer@marketflow.com'">
+                        <div class="profile-icon buyer">S</div>
+                        <h3>Sophie Laurent</h3>
+                        <p class="email">buyer@marketflow.com</p>
+                        <span class="badge buyer">Acheteur</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
